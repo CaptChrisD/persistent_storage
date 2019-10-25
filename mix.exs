@@ -4,18 +4,16 @@ defmodule PersistentStorage.Mixfile do
   @version "0.10.1"
 
   def project do
-    [app: :persistent_storage,
-     version: @version,
-     elixir: "~> 1.4",
-     deps: deps(),
-     description: "Brain dead simple file-based storage for embedded systems",
-     package: package(),
-     name: "PersistentStorage",
-     docs: [
-       source_ref: "v#{@version}", main: "PersistentStorage",
-       source_url: "https://github.com/cellulose/persistent_storage",
-#       main: "extra-readme",
-       extras: [ "README.md", "CHANGELOG.md"] ]]
+    [
+      app: :persistent_storage,
+      version: @version,
+      elixir: "~> 1.9",
+      deps: deps(),
+      description: "Simple file-based storage with caching layer for Nerves systems",
+      package: package(),
+      name: "PersistentStorage",
+      source_url: "https://github.com/captchrisd/persistent_storage"
+    ]
   end
 
   def application do
@@ -23,13 +21,16 @@ defmodule PersistentStorage.Mixfile do
   end
 
   defp deps do
-    [{:ex_doc, "~> 0.12", only: :dev}]
+    [
+      {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
+    ]
   end
 
   defp package do
     [ maintainers: ["Garth Hitchens", "Chris Dutton"],
       licenses: ["Apache-2.0"],
-      links: %{github: "https://github.com/cellulose/persistent_storage"},
+      links: %{github: "https://github.com/captchrisd/persistent_storage"},
       files: ~w(lib config) ++ ~w(README.md CHANGELOG.md LICENSE mix.exs) ]
   end
 end
+

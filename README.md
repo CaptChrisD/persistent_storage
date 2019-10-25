@@ -1,14 +1,12 @@
 # PersistentStorage
 
-[![Build Status](https://travis-ci.org/joelbyler/persistent_storage.svg?branch=master)](https://travis-ci.org/joelbyler/persistent_storage)
-
 Stores and retrieves terms from small flat files on embedded systems.
 
 `PersistentStorage` is intended for trivial persistent storage of basic system and application configuration information on embedded systems.   It is not intended to be a replacement for dets, sqlite, or many other far more capable databases.  It favors simplicity and robustness over performance and capability.
 
 **IMPORTANT -- INCOMPATIBLE API CHANGE**
 
-The API has has changed significantly for PersistentStorage 0.10.x -- you can find a summary of the changes in the [[CHANGELOG]].
+The API has has changed significantly for PersistentStorage 0.10.x -- you can find a summary of the changes in the CHANGELOG.md.
 
 If your project requires compatibility with the old (now deprecated) api, please make sure you specify "~> 0.9.0" in your project dependencies.
 
@@ -24,7 +22,7 @@ Writes always write and close a file, so are very slow (but plenty fast enough f
 
 Reads of a key from disk are slow the first time (they open and read a file), but the term is subsequently cached in ets, so further reads of the same key in a storage area are very fast, and no application-level cacheing is needed.
 
-## Installation
+## Install and Configure
 
 1. Add `persistent_storage` to your list of dependencies in `mix.exs`:
 
@@ -34,7 +32,16 @@ Reads of a key from disk are slow the first time (they open and read a file), bu
   end
   ```
 
-2. Ensure `persistent_storage` is started before your application:
+2. Define one or more storage areas in your `config/config.exs` or env specific config file
+
+  ```elixir
+  config :persistent_storage, tables: [
+    settings: [path: "/root/storage/settings"],
+    provisioning: [path: "/boot/provisioning"]
+  ]
+  ```
+
+3. Ensure `persistent_storage` is started before your application:
 
   ```elixir
   def application do
@@ -52,19 +59,6 @@ settings. We're going to put it on the standard Nerves application data volume, 
 We're going to assume that the /root partition might be rewritten anytime the user does something "resets to factory settings".
 
 The second kind, which we'll call `provisioning`, is more persistent, and is perhaps on a volume usually mounted read-only (like /boot), that persists even when the application volume gets reformatted.
-
-#### Configuration
-
-Define one or more tables in your config.exs as follows...
-
-```elixir
-# my_app/config/config.exs
-...
-config :persistent_storage, tables: [
-  settings: [path: "/root/storage/settings"],
-  provisioning: [path: "/boot/provisioning"]
-]
-```
 
 #### Writing
 
@@ -91,3 +85,4 @@ assume it was written when device  was first flashed)
 iex> PersistentStorage.get :provisioning, :device_data
 [serial_number: "302F1010", mfg_timestamp: "2016-05-04T03:28:35.279977Z"]
 ```
+
