@@ -27,10 +27,13 @@ defmodule PersistentStorage.Mixfile do
   end
 
   defp package do
-    [ maintainers: ["Garth Hitchens", "Chris Dutton"],
+    [
+      name: "Persistent Storage",
+      maintainers: ["Garth Hitchens", "Chris Dutton"],
       licenses: ["Apache-2.0"],
       links: %{github: "https://github.com/captchrisd/persistent_storage"},
-      files: ~w(lib config) ++ ~w(README.md CHANGELOG.md LICENSE mix.exs) ]
+      files: ~w(lib config) ++ ~w(README.md CHANGELOG.md LICENSE mix.exs)
+    ]
   end
 end
 
