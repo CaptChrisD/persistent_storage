@@ -11,7 +11,7 @@ defmodule PersistentStorage.Mixfile do
       deps: deps(),
       description: "Simple file-based storage with caching layer for Nerves systems",
       package: package(),
-      name: "PersistentStorage",
+      name: "Persistent Storage",
       source_url: "https://github.com/captchrisd/persistent_storage"
     ]
   end
